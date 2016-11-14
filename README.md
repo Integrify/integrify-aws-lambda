@@ -1,5 +1,5 @@
-#integrify-aws-lambda
----
+#integrify-aws-lambda [![Build Status](https://travis-ci.org/Integrify/integrify-aws-lambda.svg?branch=master)](https://travis-ci.org/Integrify/integrify-aws-lambda)
+
 
 ### A Node module that makes creating Integrify compatible AWS Lambda functions easier.
 Integrify AWS Lambda Tasks can be used in an Integrify Process to execute custom code. Integrify will trigger the *execute* function defined in the configuration object
