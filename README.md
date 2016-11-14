@@ -99,7 +99,7 @@ Generate a Handler function based on the AWS Lambda specification for Node.js 4.
  }
  
  
- let integrifyLambda = new IntegrifyLambda(config)
+ let myLambda = new IntegrifyLambda(config)
  
- exports.handler = integrifyLambda.handler;
+ exports.handler = myLambda.handler;
 ~~~~
