@@ -21,7 +21,7 @@ var myLambda = new integrifyLambda({
     outputs:[{key:"message", type:"string"}],
     execute: (event, context, callback) => {
         "use strict";
-        callback(null, 'Hello there ' + event.inputs.userName);
+        callback(null, {message: 'Hello there ' + event.inputs.userName});
     }
 
 });
