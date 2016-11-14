@@ -10,29 +10,25 @@ Integrify AWS Lambda Tasks can be used in an Integrify Process to execute custom
 
 ## Usage:
 
-**Require integrify-aws-lambda in your Lambda function:** 
-
-`var IntegrifyLambda = require('integrify-aws-lambda')`
-
-**Define a configuration object:** 
+**Basic example**
 ~~~~
-let config = {
-    inputs: [{key: "userName", type: "string"}],
-    outputs: [{key: "message", type: "string"}],
-    execute: function (event, context, callback) {
-        callback(null, {message: `Hello ${event.inputs.userName}`})
+//require this module
+var integrifyLambda = require('integrify-aws-lambda');
+
+//create a new Integrfiy AWS Lambda object passing in a configuration object with inputs, outputs and your execute function 
+var myLambda = new integrifyLambda({
+    inputs: [{key:"userName", type:"string"}],
+    outputs:[{key:"message", type:"string"}],
+    execute: (event, context, callback) => {
+        "use strict";
+        callback(null, 'Hello there ' + event.inputs.userName);
     }
-}
 
+});
+
+//Export the handler function of the new object
+exports.handler = myLambda.handler
 ~~~~
-
-**Create an instance of IntegrifyLambda with your config:**
-
-`let myLambda = new IntegrifyLambda(config);`
-
-**Export the handler:**
-
-`exports.handler = myLambda.handler;`
 
 **Package for AWS:**
 
