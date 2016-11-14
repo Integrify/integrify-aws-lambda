@@ -28,11 +28,11 @@ let config = {
 
 **Create an instance of IntegrifyLambda with your config:**
 
-`let myLmabda = new IntegrifyLambda(config);`
+`let myLambda = new IntegrifyLambda(config);`
 
 **Export the handler:**
 
-`exports.handler = myLmabda.handler;`
+`exports.handler = myLambda.handler;`
  
 ##API
 
