@@ -33,6 +33,10 @@ let config = {
 **Export the handler:**
 
 `exports.handler = myLambda.handler;`
+
+**Package for AWS:**
+
+Zip your function.js file and node_modules folder. See http://docs.aws.amazon.com/lambda/latest/dg/nodejs-create-deployment-pkg.html
  
 ##API
 
