@@ -1,6 +1,8 @@
 "use strict";
 var IntegrifyLambda = require ('../index')
 
+
+
 let config = {
     inputs: [{key:"name", type:"string", min:0, max:10},
         {key:"targetDate", type:"date", required:true},

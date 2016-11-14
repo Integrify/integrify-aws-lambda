@@ -16,13 +16,13 @@ Integrify AWS Lambda Tasks can be used in an Integrify Process to execute custom
 
 **Define a configuration object:** 
 ~~~~
-let config = { 
-                inputs:[{key:"userName", type:"string"}], 
-                outputs:[{key:"message", type: "string"}, 
-                execute: function(event, context, callback) { 
-                    callback(null, {message: `Hello ${event.inputs.userName}`})
-                }
-            }
+let config = {
+    inputs: [{key: "userName", type: "string"}],
+    outputs: [{key: "message", type: "string"}],
+    execute: function (event, context, callback) {
+        callback(null, {message: `Hello ${event.inputs.userName}`})
+    }
+}
 
 ~~~~
 
