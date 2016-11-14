@@ -45,11 +45,11 @@ var config = {
 }
 
 //create an instance of the IntegrifyLambda with the config
-let integrifyLambda = new IntegrifyLambda(config);
+let myLambda = new IntegrifyLambda(config);
 
 it("should return config.inputs", function() {
     var event = {"operation": "config.getInputs"}
-    integrifyLambda.handler(event, null, function(err,result){
+    myLambda.handler(event, null, function(err,result){
         "use strict";
         //console.log(result)
         expect(result.length).toBeGreaterThan(0);
@@ -60,7 +60,7 @@ it("should return config.inputs", function() {
 
 it("should return config.outputs", function() {
     var event = {"operation": "config.getOutputs"}
-    integrifyLambda.handler(event, null, function(err,result){
+    myLambda.handler(event, null, function(err,result){
         "use strict";
         //console.log(result)
         expect(result.length).toBeGreaterThan(0);
@@ -77,7 +77,7 @@ it("should execute and return values", function(done) {
             "targetDate": "2025-01-01" }
     }
 
-    integrifyLambda.handler(event, null, function(err,result){
+    myLambda.handler(event, null, function(err,result){
         "use strict";
         //console.log(result)
         expect(result.age).toBeGreaterThan(0);
