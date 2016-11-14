@@ -32,7 +32,7 @@ let config = {
 
 **Export the handler:**
 
-`exports.handler = integrifyLambda.handler;`
+`exports.handler = myLmabda.handler;`
  
 ##API
 
@@ -49,7 +49,7 @@ Generate a Handler function based on the AWS Lambda specification for Node.js 4.
     * `execute(event, context, callback`  - (Required) the function to execute
         * `event` - passed in by AWS when triggered by Integrify. This will expose the *inputs* passed to your function by integrify `event.inputs.userName`
         * `context` - passed in by AWS when triggered. See http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html
-        * `callback` - passed in by AWS when triggered. Used to return values or an error. see http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html
+        * `callback` - passed in by AWS when triggered. Used to return values or an error. See http://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-handler.html
  
 ## Example
  ~~~~
