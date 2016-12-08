@@ -3,10 +3,17 @@ var IntegrifyLambda = function(config) {
     this.outputs = config.outputs || [];
     this.execute = config.execute;
     this.config = config
+    this.icon = config.icon;
     this.handler = (event, context, callback) => {
         var me = this;
 
         switch(event.operation) {
+
+            //get the task icon used for this task image for the task
+            case 'config.getIcon':
+                callback(null, me.icon);
+                break;
+
             //your function must include the getInputs method which should return and array of JSON objects representing the data expected by your 'execute' function (see below)
             //you would call getInputs when configuring the task to get the fields that you can prefill
             case 'config.getInputs':

@@ -21,6 +21,7 @@ var config = {
         {key:"daysLived", type:"numeric"},
         {key:"message", type: "string"}
     ],
+    icon: "https://daily.integrify.com/integrify/resources/css/taskshapes/counter.svg",
     execute: function(event, context, callback){
         var returnVals = {};
         try {
@@ -64,6 +65,18 @@ it("should return config.outputs", function() {
         "use strict";
         //console.log(result)
         expect(result.length).toBeGreaterThan(0);
+
+    })
+
+});
+
+it("should return config.icon", function() {
+    var event = {"operation": "config.getIcon"}
+    myLambda.handler(event, null, function(err,result){
+        "use strict";
+        console.log(result)
+
+        expect(result.indexOf(".svg")).toBeGreaterThan(0);
 
     })
 
