@@ -17,6 +17,7 @@ var integrifyLambda = require('integrify-aws-lambda');
 
 //create a new Integrfiy AWS Lambda object passing in a configuration object with inputs, outputs and your execute function 
 var myLambda = new integrifyLambda({
+    helpUrl: "https://help.for.my.function",
     inputs: [{key:"userName", type:"string"}],
     outputs:[{key:"message", type:"string"}],
     execute: (event, context, callback) => {
