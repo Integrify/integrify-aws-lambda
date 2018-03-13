@@ -14,6 +14,11 @@ var IntegrifyLambda = function(config) {
                 callback(null, me.icon);
                 break;
 
+            //optional help url that will be displayed in Integrify
+            case 'config.getHelpUrl':
+                callback(null, me.helpUrl);
+                break;
+
             //your function must include the getInputs method which should return and array of JSON objects representing the data expected by your 'execute' function (see below)
             //you would call getInputs when configuring the task to get the fields that you can prefill
             case 'config.getInputs':
