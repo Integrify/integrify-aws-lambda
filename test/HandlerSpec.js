@@ -22,6 +22,7 @@ var config = {
         {key:"message", type: "string"}
     ],
     icon: "https://daily.integrify.com/integrify/resources/css/taskshapes/counter.svg",
+    helpUrl: "http://www.integrify.com",
     execute: function(event, context, callback){
         var returnVals = {};
         try {
@@ -58,6 +59,18 @@ it("should return config.inputs", function() {
     })
 
 });
+
+it("should return config.getHelp", function() {
+    var event = {"operation": "config.getHelpUrl"}
+    myLambda.handler(event, null, function(err,result){
+        "use strict";
+        //console.log(result)
+        expect(result.length).toBeGreaterThan(0);
+
+    })
+
+});
+
 
 it("should return config.outputs", function() {
     var event = {"operation": "config.getOutputs"}

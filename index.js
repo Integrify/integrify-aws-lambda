@@ -4,6 +4,7 @@ var IntegrifyLambda = function(config) {
     this.execute = config.execute;
     this.config = config
     this.icon = config.icon;
+    this.helpUrl = config.helpUrl;
     this.handler = (event, context, callback) => {
         var me = this;
 
