@@ -1,4 +1,5 @@
-"use strict";
+
+
 var IntegrifyLambda = require("../index.js");
 var expect = require("expect")
 
@@ -23,7 +24,7 @@ var config = {
     ],
     icon: "https://daily.integrify.com/integrify/resources/css/taskshapes/counter.svg",
     helpUrl: "http://www.integrify.com",
-    execute: function(event, context, callback){
+    execute: async function(event, context){
         var returnVals = {};
         try {
             let _age = _calculateAge(new Date(event.inputs.birthday));
@@ -34,68 +35,57 @@ var config = {
             returnVals.ageAtTargetYear = _ageAtTargetYear;
             let _message  = `Hi ${event.inputs.name}. You are ${_age} years old. You have lived ${_daysLived} days. You will be ${_ageAtTargetYear} on ${new Date(event.inputs.targetDate)}.`
             returnVals.message = _message;
-            setTimeout(function(){
-                "use strict";
-                callback(null, returnVals);
-            },1000)
-
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+            await delay(1);
+            return returnVals;
 
         } catch(e){
-            return callback('birthday and targetDate are required and must be a valid date.');
+            throw new Error('birthday and targetDate are required and must be a valid date.');
         }
     }
 }
 
 //create an instance of the IntegrifyLambda with the config
 let myLambda = new IntegrifyLambda(config);
-describe('callback tests suite', function() {
-    it("should return config.inputs", function() {
+
+describe('promise tests suite', function() {
+    it("should return config.inputs", async function() {
         var event = {"operation": "config.getInputs"}
-        myLambda.handler(event, null, function(err,result){
+        const result = await myLambda.handler(event, null)
             "use strict";
             //console.log(result)
-            expect(result.length).toBeGreaterThan(0);
+        expect(result.length).toBeGreaterThan(0);
 
-        })
+        
 
     });
 
-    it("should return config.getHelp", function() {
+    it("should return config.getHelp", async function() {
         var event = {"operation": "config.getHelpUrl"}
-        myLambda.handler(event, null, function(err,result){
-            "use strict";
-            //console.log(result)
-            expect(result.length).toBeGreaterThan(0);
+        const result = await myLambda.handler(event, null)
+        expect(result.length).toBeGreaterThan(0);
 
-        })
+        
 
     });
 
 
-    it("should return config.outputs", function() {
+    it("should return config.outputs", async function() {
         var event = {"operation": "config.getOutputs"}
-        myLambda.handler(event, null, function(err,result){
-            "use strict";
-            //console.log(result)
-            expect(result.length).toBeGreaterThan(0);
+        const result = await myLambda.handler(event, null)
+        expect(result.length).toBeGreaterThan(0);
 
-        })
 
     });
 
-    it("should return config.icon", function() {
+    it("should return config.icon", async function() {
         var event = {"operation": "config.getIcon"}
-        myLambda.handler(event, null, function(err,result){
-            "use strict";
-            console.log(result)
-
-            expect(result.indexOf(".svg")).toBeGreaterThan(0);
-
-        })
+        const result = await myLambda.handler(event, null)
+        expect(result.indexOf(".svg")).toBeGreaterThan(0);
 
     });
 
-    it("should execute and return values", function(done) {
+    it("should execute and return values", async function(done) {
         var event = { "operation": "runtime.execute",
             "inputs": {
                 "name": "Awsome Developer",
@@ -103,13 +93,9 @@ describe('callback tests suite', function() {
                 "targetDate": "2025-01-01" }
         }
 
-        myLambda.handler(event, null, function(err,result){
-            "use strict";
-            //console.log(result)
-            expect(result.age).toBeGreaterThan(0);
-            done();
-
-        })
-
+        const result = await myLambda.handler(event, null);
+        expect(result.age).toBeGreaterThan(0);
+        done();
     });
-});
+
+})

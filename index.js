@@ -6,6 +6,16 @@ var IntegrifyLambda = function(config) {
     this.icon = config.icon;
     this.helpUrl = config.helpUrl;
     this.handler = (event, context, callback) => {
+        
+        const func = this.handler
+  
+        if ( callback === undefined ) {
+          return new Promise(function (resolve, reject) {
+            func(event, context, function (err, result) {
+              err ? reject(err) : resolve(result)
+            })
+          })
+        }
         var me = this;
 
         switch(event.operation) {
@@ -35,10 +45,12 @@ var IntegrifyLambda = function(config) {
             //your function must include the execute method which should return a JSON object with key:value pairs based on the output variables described in getOutputs (see above)
             // pur task engine would call execute and pass inputs to use in your handler funtion
             case 'runtime.execute':
-                me.execute(event, context, function(err,result){
-                    return callback(err,result);
 
-                })
+                // me.execute(event, context, function(err,result){
+                //     return callback(err,result);
+
+                // })
+                return callback(null, await me.execute(event,context));
                 break;
 
             default:
