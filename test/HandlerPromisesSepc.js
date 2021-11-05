@@ -10,7 +10,7 @@ let _calculateAge = function _calculateAge(birthday, target) {
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
-
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 var config = {
     inputs: [{key:"name", type:"string", min:0, max:10},
         {key:"targetDate", type:"date", required:true},
@@ -35,7 +35,7 @@ var config = {
             returnVals.ageAtTargetYear = _ageAtTargetYear;
             let _message  = `Hi ${event.inputs.name}. You are ${_age} years old. You have lived ${_daysLived} days. You will be ${_ageAtTargetYear} on ${new Date(event.inputs.targetDate)}.`
             returnVals.message = _message;
-            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+           
             await delay(1);
             return returnVals;
 
@@ -85,7 +85,7 @@ describe('promise tests suite', function() {
 
     });
 
-    it("should execute and return values", async function(done) {
+    it("should execute and return values", async() => {
         var event = { "operation": "runtime.execute",
             "inputs": {
                 "name": "Awsome Developer",
@@ -94,8 +94,9 @@ describe('promise tests suite', function() {
         }
 
         const result = await myLambda.handler(event, null);
+        console.log(result)
         expect(result.age).toBeGreaterThan(0);
-        done();
+    
     });
 
 })

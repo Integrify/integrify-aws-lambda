@@ -5,52 +5,63 @@ var IntegrifyLambda = function(config) {
     this.config = config
     this.icon = config.icon;
     this.helpUrl = config.helpUrl;
-    this.handler = (event, context, callback) => {
-        
-        const func = this.handler
-  
-        if ( callback === undefined ) {
-          return new Promise(function (resolve, reject) {
-            func(event, context, function (err, result) {
-              err ? reject(err) : resolve(result)
-            })
-          })
-        }
+    this.handler = async (event, context, callback) => {
         var me = this;
 
         switch(event.operation) {
 
             //get the task icon used for this task image for the task
             case 'config.getIcon':
-                callback(null, me.icon);
+                if (callback) {
+                    callback(null, me.icon);
+                } else {
+                    return me.icon;
+                }
+               
                 break;
 
             //optional help url that will be displayed in Integrify
             case 'config.getHelpUrl':
-                callback(null, me.helpUrl);
+               
+                if (callback) {
+                    callback(null, me.helpUrl);
+                } else {
+                    return me.helpUrl;
+                }
                 break;
 
             //your function must include the getInputs method which should return and array of JSON objects representing the data expected by your 'execute' function (see below)
             //you would call getInputs when configuring the task to get the fields that you can prefill
             case 'config.getInputs':
-
-                callback(null, me.inputs);
+                if (callback) {
+                    callback(null, me.inputs);
+                } else {
+                    return me.inputs;
+                }
+              
                 break;
             //your function must include the getOutputs method which should return and array of JSON objects representing the data retruned by your 'execute' function (see below)
             //you would call getOutputs when configuring a task to get the fields to capture
             case 'config.getOutputs':
-
-                callback(null, me.outputs);
+                if (callback) {
+                    callback(null, me.outputs);
+                } else {
+                    return me.outputs;
+                }
+               
                 break;
             //your function must include the execute method which should return a JSON object with key:value pairs based on the output variables described in getOutputs (see above)
             // pur task engine would call execute and pass inputs to use in your handler funtion
             case 'runtime.execute':
-
-                // me.execute(event, context, function(err,result){
-                //     return callback(err,result);
-
-                // })
-                return callback(null, await me.execute(event,context));
+                if (callback) {
+                    me.execute(event, context, function(err,result){
+                        return callback(err,result);
+    
+                    })
+                } else {
+                    return await me.execute(event,context);
+                }
+                
                 break;
 
             default:
