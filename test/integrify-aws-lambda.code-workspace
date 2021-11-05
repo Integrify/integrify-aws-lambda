@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"mochaExplorer.debuggerPort": 9748,
+		"mochaExplorer.exit": true,
+		"mochaExplorer.envPath": "../environments/dev/.env",
+		"mochaExplorer.timeout": 100000,
+	}
+}
