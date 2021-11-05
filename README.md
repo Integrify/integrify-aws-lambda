@@ -54,42 +54,43 @@ Generate a Handler function based on the AWS Lambda specification for Node.js 4.
  
 ## Example
  ~~~~
- "use strict";
- var IntegrifyLambda = require('integrify-aws-lambda')
+
+ const IntegrifyLambda = require('integrify-aws-lambda')
  
- let config = {
-     inputs: [{key:"name", type:"string", min:0, max:10},
-         {key:"targetDate", type:"date", required:true},
-         {key:"birthday", type:"date", required:true}
-     ],
-     outputs: [{key:"name", type:"string", min:0, max:10},
-         {key:"age", type:"numeric"},
-         {key:"ageAtTargetYear", type:"numeric"},
-         {key:"daysLived", type:"numeric"},
-         {key:"message", type: "string"}
-     ],
-     execute: function(event, context, callback){
-         var returnVals = {};
-         try {
-             let age = _calculateAge(new Date(event.inputs.birthday));
-             returnVals.age = age;
-             let daysLived = age * 365;
-             returnVals.daysLived = daysLived;
-             let ageAtTargetYear = _calculateAge(new Date(event.inputs.birthday), new Date(event.inputs.targetDate));
-             returnVals.ageAtTargetYear = ageAtTargetYear;
-             let message  = `Hi ${event.inputs.name}. You are ${age} years old. You have lived ${daysLived} days. You will be ${ageAtTargetYear} on ${new Date(event.inputs.targetDate)}.`
-             returnVals.message = message;
-             setTimeout(function(){
-                 "use strict";
-                 callback(null, returnVals);
-             },1000)
- 
- 
-         } catch(e){
-             return callback('birthday and targetDate are required and must be a valid date.');
-         }
-     }
- }
+ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+ const config = {
+    inputs: [{key:"name", type:"string", min:0, max:10},
+        {key:"targetDate", type:"date", required:true},
+        {key:"birthday", type:"date", required:true}
+    ],
+    outputs: [{key:"name", type:"string", min:0, max:10},
+        {key:"age", type:"int"},
+        {key:"ageAtTargetYear", type:"numeric"},
+        {key:"daysLived", type:"numeric"},
+        {key:"message", type: "string"}
+    ],
+    icon: "https://daily.integrify.com/integrify/resources/css/taskshapes/counter.svg",
+    helpUrl: "http://www.integrify.com",
+    execute: async function(event, context){
+        var returnVals = {};
+        try {
+            let _age = _calculateAge(new Date(event.inputs.birthday));
+            returnVals.age = _age;
+            let _daysLived = _age * 365;
+            returnVals.daysLived = _daysLived;
+            let _ageAtTargetYear = _calculateAge(new Date(event.inputs.birthday), new Date(event.inputs.targetDate));
+            returnVals.ageAtTargetYear = _ageAtTargetYear;
+            let _message  = `Hi ${event.inputs.name}. You are ${_age} years old. You have lived ${_daysLived} days. You will be ${_ageAtTargetYear} on ${new Date(event.inputs.targetDate)}.`
+            returnVals.message = _message;
+           
+            await delay(1);
+            return returnVals;
+
+        } catch(e){
+            throw new Error('birthday and targetDate are required and must be a valid date.');
+        }
+    }
+}
  
  let _calculateAge = function _calculateAge(birthday, target) {
      // birthday is a date. target is a date, is optional and defaults to today

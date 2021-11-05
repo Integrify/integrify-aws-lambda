@@ -52,8 +52,7 @@ describe('promise tests suite', function() {
     it("should return config.inputs", async function() {
         var event = {"operation": "config.getInputs"}
         const result = await myLambda.handler(event, null)
-            "use strict";
-            //console.log(result)
+       
         expect(result.length).toBeGreaterThan(0);
 
         
